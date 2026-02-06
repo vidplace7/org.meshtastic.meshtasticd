@@ -40,6 +40,9 @@ modules:
       - desktop-file-edit --set-key="Exec" --set-value="meshtasticd-wrapper.sh %U"
         /app/share/applications/org.meshtastic.meshtasticd.desktop
       - install -Dm644 -t /app/share/metainfo bin/org.meshtastic.meshtasticd.metainfo.xml
+      # Override platformio version in appstate.json (prevent self-upgrade)
+      - |
+        sed -i 's/"last_version":[[:space:]]*"[^"]*"/"last_version": "6.1.19"/' pio/core/appstate.json
       # Build meshtasticd
       - platformio run -e native-tft
       - install -Dm755 .pio/build/native-tft/program /app/bin/meshtasticd
